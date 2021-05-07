@@ -16,7 +16,7 @@ export default function Home() {
           <Image src="/contacts.png"  width={900} height={600} alt="contacting ilustration"/>
         </div>
         <div className="mx-auto m-auto">
-          <button className="block bg-red-400 hover:bg-red-500 text-white text-lg mx-auto p-4 rounded" onClick={() => onClick()}>
+          <button className="block bg-red-400 hover:bg-red-500 text-white text-lg mx-auto p-4 rounded-full" onClick={() => onClick()}>
             My Contacts
             </button>
           </div> 

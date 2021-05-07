@@ -1,10 +1,10 @@
 const ContactCard = (props) => {
 
   return (
-    <div className="mx-auto max-w-xl px-6 py-2 bg-white border-0 shadow-lg sm:rounded-3xl m-2">
+    <div className="mx-auto max-w-xl px-6 py-2 bg-white border-0 shadow-lg sm:rounded-3xl m-2 hover:bg-gray-50">
       <div>
-        <h1>{props.contact.name + " " + props.contact.lastname}</h1>
-        <p>{props.contact.company}</p>
+        <h1 className="text-indigo-700 capitalize text-lg font-semibold">{props.contact.name + " " + props.contact.lastname}</h1>
+        <p className="text-gray-400 capitalize">{props.contact.company}</p>
       </div>
       <div>
         <div className="flex space-x-2">

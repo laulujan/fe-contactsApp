@@ -1,4 +1,3 @@
-
 import SearchBar from "../components/searchBar/SearchBar";
 import ContactCard from "../components/contactCard/ContactCard";
 import Modal from "../components/Modal";
@@ -7,12 +6,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const contacts = () => {
-
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [currentContact, setCurrentContact] = useState([]);
   const [currentPageState, setCurrentPageState] = useState(1);
-  const [totalPages, setTotalPages] = useState()
+  const [totalPages, setTotalPages] = useState();
   let currentPage = 1;
 
   const [contactsList, setContactsList] = useState([]);
@@ -21,22 +19,21 @@ const contacts = () => {
   const inflateContactList = (result) => {
     setContactsList(result);
 
-    paginate(result, 1)
+    paginate(result, 1);
   };
 
   const paginate = (result, currentPage) => {
-    let rowsPerPage = 3
-    let totalPages = Math.ceil(result.length / rowsPerPage)
+    let rowsPerPage = 10;
+    let totalPages = Math.ceil(result.length / rowsPerPage);
 
-    let max = currentPage * rowsPerPage
-    let min = max-rowsPerPage
-    
+    let max = currentPage * rowsPerPage;
+    let min = max - rowsPerPage;
 
-    let resultClone =  [...result]
+    let resultClone = [...result];
     setContactsListPage(resultClone.splice(min, max));
     setCurrentPageState(currentPage);
-    setTotalPages(totalPages)
-  }
+    setTotalPages(totalPages);
+  };
 
   const loadContacts = async () => {
     let inflate = inflateContactList;
@@ -74,31 +71,31 @@ const contacts = () => {
   };
   const editAction = (contact) => {
     setCurrentContact(contact);
-    router.push({ pathname: "/contacts/edit", query: {id: contact.id} });
+    router.push({ pathname: "/contacts/edit", query: { id: contact.id } });
   };
 
   const searchContact = async (name) => {
     let inflate = inflateContactList;
     await axios({
       method: "get",
-      url: "https://bt-contacts-app.herokuapp.com/api/contacts/name/"+ name,
+      url: "https://bt-contacts-app.herokuapp.com/api/contacts/name/" + name,
     }).then((e) => {
       if (e.status == 200) {
         inflate(e.data);
       }
     });
-  }
+  };
 
   const nextPage = () => {
-    paginate(contactsList, currentPageState+1)
-  }
+    paginate(contactsList, currentPageState + 1);
+  };
 
   const prevPage = () => {
-    paginate(contactsList, currentPageState-1)
-  }
+    paginate(contactsList, currentPageState - 1);
+  };
 
   const btnClass =
-  "px-6 py-3 my-2 mx-2 text- text-white transition-all duration-150 ease-linear rounded-full shadow outline-none bg-red-400 hover:bg-red-500 hover:shadow-lg focus:outline-none "
+    "px-6 py-3 my-2 mx-2 text- text-white transition-all duration-150 ease-linear rounded-full shadow outline-none bg-red-400 hover:bg-red-500 hover:shadow-lg focus:outline-none ";
 
   return (
     <div className=" container mx-auto max-w-2xl">
@@ -108,7 +105,10 @@ const contacts = () => {
           <button className={btnClass} onClick={onClick}>
             Add
           </button>
-          <SearchBar searchContact={searchContact} loadContacts={loadContacts}/>
+          <SearchBar
+            searchContact={searchContact}
+            loadContacts={loadContacts}
+          />
         </div>
         <div className="container">
           {contactsListPage.map((contact) => {
@@ -117,6 +117,7 @@ const contacts = () => {
                 contact={contact}
                 deleteContact={deleteContact}
                 editAction={editAction}
+                key={contact.id+contact.name}
               />
             );
           })}
@@ -128,15 +129,20 @@ const contacts = () => {
           confirmDeleteContact={confirmDeleteContact}
         />
       </div>
-      <div>
-        { currentPageState > 1 && (
-          <button onClick={() => prevPage()}>prev</button>
+      <div className="flex w-max items-center mx-auto">
+        {currentPageState > 1 && (
+          <button className="flex m-1 mx-4 hover:text-red-400" onClick={() => prevPage()}>
+            <i className="fas fa-chevron-left"></i>
+          </button>
         )}
-        <p>Page {currentPageState} of {totalPages}</p>
-        { currentPageState < totalPages && (
-          <button onClick={() => nextPage()}>next</button>
+        <p className="text-center flex"> 
+          Page {currentPageState} of {totalPages}
+        </p>
+        {currentPageState < totalPages && (
+          <button className="flex m-1 mx-4 hover:text-red-400" onClick={() => nextPage()}>
+            <i className="fas fa-chevron-right"></i>
+          </button>
         )}
-        
       </div>
     </div>
   );

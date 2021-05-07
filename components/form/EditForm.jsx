@@ -9,7 +9,7 @@ const schema = yup.object().shape({
   name: yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid name').required(),
   lastname: yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid name').required(),
   company: yup.string(),
-  phone: yup.number().positive().integer().min(10),
+  phone: yup.string().transform(value => (isNaN(value) ? "" : value)).notRequired().matches(/^$|^\d{10}$/, 'Please enter a valid phone').nullable(true),
   email: yup.string().email().required(),
 });
 
