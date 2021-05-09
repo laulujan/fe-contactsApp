@@ -73,7 +73,7 @@ export default function EditForm(props) {
               type="text"
               placeholder=""
               className={inputClass}
-              value={props.currentContact[0].company}
+              defaultValue={props.currentContact[0].company}
               {...register("company")}
             />
             <label htmlFor="phoneNumber">Phone number</label>
