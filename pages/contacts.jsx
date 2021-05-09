@@ -111,6 +111,7 @@ const contacts = () => {
           />
         </div>
         <div className="container">
+        {!contactsListPage && <div>No contacts found</div>}
           {contactsListPage.map((contact) => {
             return (
               <ContactCard
@@ -129,6 +130,7 @@ const contacts = () => {
           confirmDeleteContact={confirmDeleteContact}
         />
       </div>
+      {totalPages === 0 && <div className="flex w-max items-center mx-auto text-gray-400 m-10">No contacts found</div>}
       <div className="flex w-max items-center mx-auto">
         {currentPageState > 1 && (
           <button className="flex m-1 mx-4 hover:text-red-400" onClick={() => prevPage()}>
